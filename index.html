@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crazy Family | Камерний Театр</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #08090a;
+      --bg-card: #121417;
+      --bg-elevated: #1a1d22;
+      --gold: #d4af37;
+      --gold-hover: #b89628;
+      --text: #eaeaea;
+      --text-muted: #8e95a0;
+      --border: rgba(212, 175, 55, 0.25);
+      --success: #2ecc71;
+      --alert-bg: rgba(212, 175, 55, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, .brand {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1.5px;
+    }
+
+    /* Шапка */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 9, 10, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      text-decoration: none;
+      margin-right: auto;
+      cursor: pointer;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--gold);
+    }
+
+    /* Соцмережі в шапці */
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      background: rgba(255, 255, 255, 0.03);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--gold);
+      color: #08090a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+
+    .social-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Кнопки */
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: #08090a;
+      border: none;
+      padding: 12px 26px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 10px 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* Логіка сторінок */
+    .page-section {
+      display: none;
+    }
+
+    .page-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      border-left: 3px solid var(--gold);
+      padding-left: 16px;
+      color: #fff;
+    }
+
+    /* Баннер */
+    .hero {
+      text-align: center;
+      padding: 90px 20px;
+      background: radial-gradient(circle at center, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 40px;
+    }
+
+    .hero-tag {
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #fff;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 35px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Про нас */
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 35px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .about-card h3 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .about-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 750px;
+      margin: 0 auto 15px;
+    }
+
+    /* Блок безпеки */
+    .safety-alert-box {
+      background: var(--alert-bg);
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .safety-alert-box svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .safety-alert-box p {
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    /* Карточки вистав */
+    .plays-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 30px;
+    }
+
+    .play-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+
+    .play-card:hover {
+      border-color: var(--border);
+      transform: translateY(-4px);
+    }
+
+    .play-card-img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: #181a1f;
+    }
+
+    .play-card .genre {
+      font-size: 0.75rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 8px;
+    }
+
+    .play-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .play-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .play-card .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 18px;
+      gap: 15px;
+    }
+
+    /* Зал */
+    .hall-preview-section {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 35px 25px;
+      text-align: center;
+    }
+
+    .stage {
+      height: 38px;
+      background: linear-gradient(180deg, var(--gold) 0%, rgba(212, 175, 55, 0.1) 100%);
+      margin: 0 auto 35px;
+      min-width: 320px;
+      max-width: 600px;
+      border-radius: 50% 50% 0 0 / 16px 16px 0 0;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.15);
+    }
+
+    .hall-layout-static {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 700px;
+      margin: 0 auto 25px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .hall-row-static {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .row-label {
+      width: 55px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: right;
+    }
+
+    .seats-grid-static {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 6px;
+      flex: 1;
+    }
+
+    .seat-static {
+      height: 34px;
+      background-color: #1f242d;
+      border-radius: 4px 4px 2px 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    /* Команда */
+    .team-section-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .person-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 40px 30px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .person-photo-wrap {
+      width: 100%;
+      max-width: 280px;
+      height: 350px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 2px solid var(--gold);
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+      margin: 0 auto;
+      background: #181a1f;
+    }
+
+    .person-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .person-info h3 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .person-roles-tag {
+      display: inline-block;
+      color: var(--gold);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+      text-transform: lowercase;
+    }
+
+    .person-roles-tag::first-letter {
+      text-transform: uppercase;
+    }
+
+    .person-bio {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    /* Секція Контакти */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .contact-info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 30px;
+    }
+
+    .contact-item {
+      margin-bottom: 24px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .contact-label {
+      font-size: 0.75rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .contact-value {
+      font-size: 1.05rem;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .contact-value:hover {
+      color: var(--gold);
+    }
+
+    .map-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      height: 420px;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(80%) invert(92%) contrast(85%);
+    }
+
+    /* Оплата ФОП */
+    .payment-section-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 40px 30px;
+    }
+
+    .fop-details-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .fop-info-card {
+      background: #0d0f12;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 24px;
+    }
+
+    .fop-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      gap: 15px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+      padding-bottom: 8px;
+    }
+
+    .fop-row .val {
+      color: #fff;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .iban-container {
+      background: #181b22;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      gap: 10px;
+    }
+
+    .btn-copy {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-copy:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .social-card-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      background: #0d0f12;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .social-card-link:hover {
+      border-color: var(--gold);
+      background: #15181e;
+      transform: translateY(-2px);
+    }
+
+    .social-card-link span {
+      color: var(--gold);
+      font-size: 0.72rem;
+      display: block;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 960px) {
+      .header-inner { flex-wrap: wrap; }
+      nav { order: 3; width: 100%; overflow-x: auto; }
+      .person-card { grid-template-columns: 1fr; text-align: center; }
+      .fop-details-grid { grid-template-columns: 1fr; }
+      .contacts-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Навігація -->
+  <header>
+    <div class="header-inner">
+      <div class="brand" onclick="navigateTo('home')">Crazy Family</div>
+      <nav>
+        <ul>
+          <li><a onclick="navigateTo('home')" id="nav-home" class="active">Головна</a></li>
+          <li><a onclick="navigateTo('afisha')" id="nav-afisha">Афіша</a></li>
+          <li><a onclick="navigateTo('hall')" id="nav-hall">Зал (2х12)</a></li>
+          <li><a onclick="navigateTo('team')" id="nav-team">Команда</a></li>
+          <li><a onclick="navigateTo('contacts')" id="nav-contacts">Контакти</a></li>
+          <li><a onclick="navigateTo('payment')" id="nav-payment">Оплата (ФОП)</a></li>
+        </ul>
+      </nav>
+
+      <div class="social-links">
+        <a href="https://t.me/crazyfamily1403" target="_blank" class="social-btn" title="Telegram-канал">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/crazyfamily_theater?stkn=MThkd2trdDJpcmU4eQ==" target="_blank" class="social-btn" title="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. СТОРІНКА: ГОЛОВНА -->
+    <section id="page-home" class="page-section active">
+      <div class="hero">
+        <p class="hero-tag">Камерний формат • VIP-простір на 24 місця</p>
+        <h1>Театр Crazy Family</h1>
+        <p>Мистецтво поруч із тобою: щира драма, сучасний авторський біт та максимальне занурення всього для 24 глядачів.</p>
+        <div class="hero-actions">
+          <button class="btn-gold" onclick="navigateTo('afisha')">Дивитися репертуар</button>
+          <button class="btn-outline" onclick="navigateTo('contacts')">Де нас знайти</button>
+        </div>
+      </div>
+
+      <div class="about-card">
+        <h3>Про нас</h3>
+        <p>Привіт, любі глядачі!<br>Ми театр “Crazy family”, створений про людей і для людей. У нас багато цікавих, різноманітних вистав, будемо раді бачити вас!</p>
+        <p style="color: var(--gold); font-weight: 600; margin-top: 10px;">Crazy — щось цікаве, неординарне та підняття актуальних тем суспільства.</p>
+      </div>
+
+      <h2 class="section-title">Головна прем'єра сезону</h2>
+      <div class="plays-grid" id="home-plays-grid">
+        <!-- Автоматично підтягується перша вистава з таблиці -->
+      </div>
+    </section>
+
+    <!-- 2. СТОРІНКА: АФІША -->
+    <section id="page-afisha" class="page-section">
+      <h2 class="section-title">Повна Афіша та Репертуар</h2>
+      <div class="plays-grid" id="full-plays-grid">
+        <!-- Автоматично підтягуються всі вистави з таблиці -->
+      </div>
+    </section>
+
+    <!-- 3. СТОРІНКА: СХЕМА ЗАЛУ -->
+    <section id="page-hall" class="page-section">
+      <div class="hall-preview-section">
+        <p style="color: var(--gold); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; margin-bottom: 8px;">VIP-простір</p>
+        <h2 style="font-size: 2rem; margin-bottom: 25px; color: #fff;">Камерна сцена: 2 ряди по 12 місць</h2>
+
+        <div class="safety-alert-box" style="max-width: 650px; margin: 0 auto 25px; text-align: left;">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+          <p>Зала розташована у підвальному приміщенні! Під час повітряних тривог вистави проходять у безпечних умовах.</p>
+        </div>
+        
+        <div class="stage">ЕКРАН / СЦЕНА</div>
+        
+        <div class="hall-layout-static">
+          <div class="hall-row-static">
+            <div class="row-label">Ряд 1</div>
+            <div class="seats-grid-static">
+              <div class="seat-static">1</div><div class="seat-static">2</div><div class="seat-static">3</div><div class="seat-static">4</div>
+              <div class="seat-static">5</div><div class="seat-static">6</div><div class="seat-static">7</div><div class="seat-static">8</div>
+              <div class="seat-static">9</div><div class="seat-static">10</div><div class="seat-static">11</div><div class="seat-static">12</div>
+            </div>
+          </div>
+          <div class="hall-row-static">
+            <div class="row-label">Ряд 2</div>
+            <div class="seats-grid-static">
+              <div class="seat-static">1</div><div class="seat-static">2</div><div class="seat-static">3</div><div class="seat-static">4</div>
+              <div class="seat-static">5</div><div class="seat-static">6</div><div class="seat-static">7</div><div class="seat-static">8</div>
+              <div class="seat-static">9</div><div class="seat-static">10</div><div class="seat-static">11</div><div class="seat-static">12</div>
+            </div>
+          </div>
+        </div>
+        
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 650px; margin: 25px auto 30px; line-height: 1.8;">
+          Камерний формат розрахований рівно на <b>24 місця</b>. Кожен глядач відчуває себе частиною перформансу. Ви можете вказати конкретні номери крісел під час бронювання у Telegram.
+        </p>
+
+        <a href="https://t.me/aleks_titko?text=Доброго%20дня!%20Хочу%20забронювати%20місця%20в%20залі" target="_blank" class="btn-gold">Забронювати конкретні місця</a>
+      </div>
+    </section>
+
+    <!-- 4. СТОРІНКА: КОМАНДА -->
+    <section id="page-team" class="page-section">
+      <h2 class="section-title">Творча Команда</h2>
+      <div class="team-section-wrapper">
+        <!-- Динамічно завантажується з вкладки "Команда" -->
+      </div>
+    </section>
+
+    <!-- 5. СТОРІНКА: КОНТАКТИ -->
+    <section id="page-contacts" class="page-section">
+      <h2 class="section-title">Контакти та Локація</h2>
+      
+      <div class="contacts-grid">
+        <div class="contact-info-card">
+          <div class="contact-item">
+            <div class="contact-label">Локація / Арт-студія</div>
+            <div class="contact-value" style="color: var(--gold);">вул. Володимирська, 71 (вхід із двору)</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 6px;">Арт-студія "Темний Софіт". Камерний затишний простір у центрі столиці (всього 24 місця).</p>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-label">Тітко Олександр Русланович</div>
+            <a href="tel:+380938220131" class="contact-value"> +380 93 822 01 32</a>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-label">Костюк Олександра Олександрівна</div>
+            <a href="tel:+380980466100" class="contact-value">+380 98 046 61 00</a>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-label">Бронювання квитків</div>
+            <a href="https://t.me/aleks_titko" target="_blank" class="btn-gold" style="margin-top: 8px; display: inline-block; width: 100%; text-align: center;">Написати адміністратору</a>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.597652391696!2d30.51084277655523!3d50.44111957159146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x404ce4b92b6a55c9%3A0x6b877cb63b390b39!2z0LLRg9C70LjRhtGPINCTCVBvbGlyaXNjaGthLCA3MSwgS2lpeXYsIDAyMDAw!5e0!3m2!1suk!2sua!4v1700000000000!5m2!1suk!2sua" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. СТОРІНКА: ОПЛАТА -->
+    <section id="page-payment" class="page-section">
+      <div class="payment-section-box">
+        <h2 class="section-title">Оплата та реквізити ФОП</h2>
+        
+        <div class="fop-details-grid">
+          <div>
+            <h3 style="color: #fff; font-size: 1.4rem; margin-bottom: 14px;">Як придбати квитки?</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8;">
+              1. Оберіть виставу та зв'яжіться з адміністрацією у Telegram.<br>
+              2. Уточніть наявність бажаних місць у залі на 24 глядачі.<br>
+              3. Здійсніть офіційну оплату за реквізитами IBAN у додатку свого банку.<br>
+              4. Надішліть квитанцію та отримайте персональний електронний квиток.
+            </p>
+            <a href="https://t.me/aleks_titko?text=Доброго%20дня!%20Хочу%20придбати%20квитки" target="_blank" class="btn-gold">Зв'язатися з адміністратором</a>
+          </div>
+
+          <div class="fop-info-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <span style="color: var(--gold); font-size: 0.78rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Офіційні реквізити</span>
+              <span style="color: var(--success); font-size: 0.7rem; font-weight: 600;">● Платник єдиного податку</span>
+            </div>
+
+            <div class="fop-row">
+              <span style="color: var(--text-muted);">Одержувач:</span>
+              <span class="val">ФОП ТІТКО ОЛЕКСАНДР РУСЛАНОВИЧ</span>
+            </div>
+            <div class="fop-row">
+              <span style="color: var(--text-muted);">РНОКПП / ЄДРПОУ:</span>
+              <span class="val">3740903151</span>
+            </div>
+            <div class="fop-row">
+              <span style="color: var(--text-muted);">Банк:</span>
+              <span class="val">АТ КБ "ПРИВАТБАНК"</span>
+            </div>
+
+            <div class="iban-container">
+              <div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Рахунок IBAN (UA):</div>
+                <div style="font-family: monospace; color: var(--gold); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.5px;" id="ibanText">UA043052990000026008010148485</div>
+              </div>
+              <button class="btn-copy" onclick="copyIbanText()">Копіювати</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div style="max-width: 500px; margin: 0 auto 25px;">
+      <p style="color: var(--gold); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1.5px; margin-bottom: 12px;">Слідкуйте за нами в соцмережах</p>
+      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="https://t.me/crazyfamily1403" target="_blank" class="social-card-link">
+          <div>
+            <span>Telegram-канал</span>
+            Crazy Family
+          </div>
+        </a>
+        <a href="https://www.instagram.com/crazyfamily_theater?stkn=MThkd2trdDJpcmU4eQ==" target="_blank" class="social-card-link">
+          <div>
+            <span>Instagram</span>
+            @crazyfamily_theater
+          </div>
+        </a>
+      </div>
+    </div>
+    
+    <p style="font-size: 0.8rem;">
+      &copy; 2026 Театр Crazy Family. Камерний зал 2х12. Офіційні розрахунки через розрахунковий рахунок ФОП.
+    </p>
+  </footer>
+
+  <script>
+    // Твої посилання на Google Таблиці
+    const TEAM_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTVZCq_jniLOt8M-QQxIB_7dD9B4T0Q8Y3jl6zgZFKfdUTNA_OED3oJ657nV-lvBTZSrOBO0N1dbtEn/pub?output=csv';
+    const AFISHA_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTVZCq_jniLOt8M-QQxIB_7dD9B4T0Q8Y3jl6zgZFKfdUTNA_OED3oJ657nV-lvBTZSrOBO0N1dbtEn/pub?gid=959022482&single=true&output=csv';
+
+    // Універсальний CSV-парсер
+    function parseCSV(text) {
+      const lines = text.split('\n');
+      const result = [];
+      if (lines.length === 0) return result;
+      
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const row = [];
+        let inQuotes = false;
+        let current = '';
+        for (let char of lines[i]) {
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            row.push(current.trim().replace(/^"|"$/g, ''));
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+        row.push(current.trim().replace(/^"|"$/g, ''));
+        
+        const obj = {};
+        for (let j = 0; j < headers.length; j++) {
+          obj[headers[j]] = row[j] || '';
+        }
+        result.push(obj);
+      }
+      return result;
+    }
+
+    // Генерація картки вистави
+    function renderPlayCard(play) {
+      const tgUser = play.tg_user || 'aleks_titko';
+      const tgText = encodeURIComponent(`Доброго дня! Хочу забронювати квитки на виставу «${play.title}» (${play.datetime})`);
+      const tgLink = `https://t.me/${tgUser}?text=${tgText}`;
+
+      return `
+        <div class="play-card">
+          <div>
+            <img src="${play.photo || 'вистава театр.jpg'}" alt="${play.title}" class="play-card-img" onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80'">
+            <div class="genre">${play.genre || 'Театральна вистава'}</div>
+            <h3>${play.title}</h3>
+            <p>${play.desc}</p>
+          </div>
+          <div class="meta">
+            <div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">${play.datetime}</div>
+              <div style="color: var(--gold); font-weight: 700; font-size: 1.15rem; margin-top: 2px;">${play.price}</div>
+            </div>
+            <a href="${tgLink}" target="_blank" class="btn-gold">Замовити квиток</a>
+          </div>
+        </div>
+      `;
+    }
+
+    // Завантаження Афіші
+    async function loadAfishaData() {
+      try {
+        const response = await fetch(AFISHA_CSV_URL);
+        if (!response.ok) return;
+        const csvText = await response.text();
+        const plays = parseCSV(csvText);
+
+        if (plays.length > 0) {
+          const fullGrid = document.getElementById('full-plays-grid');
+          const homeGrid = document.getElementById('home-plays-grid');
+
+          if (fullGrid) {
+            fullGrid.innerHTML = plays.map(p => renderPlayCard(p)).join('');
+          }
+          if (homeGrid) {
+            homeGrid.innerHTML = renderPlayCard(plays[0]);
+          }
+        }
+      } catch (e) {
+        console.error('Помилка завантаження афіші:', e);
+      }
+    }
+
+    // Завантаження Команди
+    async function loadTeamData() {
+      try {
+        const response = await fetch(TEAM_CSV_URL);
+        if (!response.ok) return;
+        const csvText = await response.text();
+        const members = parseCSV(csvText);
+
+        if (members.length > 0) {
+          const container = document.querySelector('.team-section-wrapper');
+          if (!container) return;
+          container.innerHTML = '';
+
+          members.forEach(person => {
+            const card = document.createElement('div');
+            card.className = 'person-card';
+            card.innerHTML = `
+              <div class="person-photo-wrap">
+                <img src="${person.photo || 'k.jpg'}" alt="${person.name}" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80'">
+              </div>
+              <div class="person-info">
+                <h3>${person.name}</h3>
+                <div class="person-roles-tag">${person.role}</div>
+                <p class="person-bio">${person.bio}</p>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (e) {
+        console.error('Помилка завантаження команди:', e);
+      }
+    }
+
+    // Навігація по вкладках
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+
+      const targetSection = document.getElementById(`page-${pageId}`);
+      const targetNav = document.getElementById(`nav-${pageId}`);
+
+      if (targetSection) targetSection.classList.add('active');
+      if (targetNav) targetNav.classList.add('active');
+
+      window.location.hash = pageId;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) navigateTo(hash);
+    });
+
+    function copyIbanText() {
+      const iban = document.getElementById('ibanText').innerText.trim();
+      navigator.clipboard.writeText(iban).then(() => {
+        alert("IBAN скопійовано:\n" + iban);
+      }).catch(() => {
+        alert("Скопійовано: " + iban);
+      });
+    }
+
+    // Ініціалізація
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialPage = window.location.hash.replace('#', '') || 'home';
+      navigateTo(initialPage);
+      loadTeamData();
+      loadAfishaData();
+    });
+  </script>
+</body>
+</html>
